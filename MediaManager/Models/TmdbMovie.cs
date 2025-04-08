@@ -7,6 +7,7 @@ public class TmdbMovie
     public string overview { get; set; } = string.Empty;
     public string poster_path { get; set; } = string.Empty;
     public string release_date { get; set; } = string.Empty;
+    public double vote_average { get; set; }
 }
 
 public class TmdbResponse
