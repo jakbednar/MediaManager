@@ -1,3 +1,10 @@
+body {
+    background-color: #111;
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    color: #f0f0f0;
+}
+
 .valid.modified:not([type=checkbox]) {
     outline: 1px solid #26b050;
 }

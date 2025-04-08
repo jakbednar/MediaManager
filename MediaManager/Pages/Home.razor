@@ -1,7 +1,134 @@
 ﻿@page "/"
+@using MediaManager.Models
+@using MediaManager.Services
+@inject TmdbService TmdbService
 
 <PageTitle>Home</PageTitle>
 
-<h1>Media Manager</h1>
+<h3>🎬 Trending Movies</h3>
 
-Welcome to your new app.
+@if (movies == null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <div class="movie-grid">
+        @foreach (var movie in movies)
+        {
+            <div class="movie-card">
+                <img src="@GetPosterUrl(movie.poster_path)" alt="@movie.title" />
+                <div class="movie-info">
+                    <h5>@movie.title</h5>
+                    <p>@movie.release_date</p>
+                </div>
+            </div>
+        }
+    </div>
+
+    <button @onclick="LoadNextPage">Load More</button>
+}
+
+@code {
+    private List<TmdbMovie> movies = new();
+    private int currentPage = 1;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadMovies(currentPage);
+    }
+
+    private async Task LoadMovies(int page)
+    {
+        var newMovies = await TmdbService.GetPopularMoviesAsync(page);
+        movies.AddRange(newMovies);
+    }
+
+    private async Task LoadNextPage()
+    {
+        currentPage++;
+        await LoadMovies(currentPage);
+    }
+
+    private string GetPosterUrl(string path)
+        => $"https://image.tmdb.org/t/p/w300{path}";
+}
+
+<style>
+    h3 {
+        margin-top: 2rem;
+        font-size: 2rem;
+        font-weight: 600;
+        color: #ffffff;
+        text-align: center;
+    }
+
+    .movie-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 2rem;
+        padding: 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .movie-card {
+        background-color: #2b2b2b;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+        transition: transform 0.2s ease;
+    }
+
+    .movie-card:hover {
+        transform: scale(1.05);
+    }
+
+    .movie-card img {
+        width: 100%;
+        height: auto;
+        display: block;
+    }
+
+    .movie-info {
+        padding: 1rem;
+        color: #f5f5f5;
+        text-align: center;
+    }
+
+    .movie-info h5 {
+        margin: 0;
+        font-size: 1.1rem;
+        font-weight: 600;
+    }
+
+    .movie-info p {
+        margin-top: 0.5rem;
+        font-size: 0.9rem;
+        color: #aaaaaa;
+    }
+
+    button {
+        display: block;
+        margin: 2rem auto;
+        padding: 0.8rem 2rem;
+        font-size: 1rem;
+        font-weight: 600;
+        background-color: #00bfff;
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+        background-color: #008fc9;
+    }
+
+    body {
+        background-color: #121212;
+        margin: 0;
+        padding: 0;
+    }
+</style>

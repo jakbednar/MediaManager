@@ -1,3 +1,67 @@
 ﻿@inherits LayoutComponentBase
 
-@Body
+<div class="nav-container">
+    <div class="nav-left">
+        <span class="logo">🎬 Media Manager</span>
+    </div>
+    <div class="nav-right">
+        <NavLink href="/" Match="NavLinkMatch.All" class="nav-link">Home</NavLink>
+        <NavLink href="/popular" class="nav-link">Popular</NavLink>
+        <NavLink href="/favorites" class="nav-link">Favorites</NavLink>
+    </div>
+</div>
+
+<div class="main-layout-body">
+    @Body
+</div>
+
+<style>
+    .nav-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #1a1a1a;
+        padding: 1rem 2rem;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+    }
+
+    .logo {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #f0f0f0;
+    }
+
+    .nav-right {
+        display: flex;
+        gap: 2rem;
+    }
+
+    .nav-link {
+        color: #cccccc;
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 1rem;
+        padding-bottom: 0.2rem;
+        border-bottom: 2px solid transparent;
+        transition: border-color 0.3s ease, color 0.3s ease;
+    }
+
+    .nav-link:hover {
+        color: #ffffff;
+    }
+
+    .nav-link.active {
+        color: #ffffff;
+        border-bottom: 2px solid #00bfff;
+    }
+
+    .main-layout-body {
+        padding: 2rem;
+        background-color: #111;
+        min-height: 100vh;
+        color: #f0f0f0;
+    }
+</style>

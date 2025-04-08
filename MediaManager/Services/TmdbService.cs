@@ -15,11 +15,13 @@ public class TmdbService
         _http = http;
     }
 
-    public async Task<List<TmdbMovie>> GetPopularMoviesAsync()
+    public async Task<List<TmdbMovie>> GetPopularMoviesAsync(int page = 1)
     {
-        string url = $"https://api.themoviedb.org/3/movie/popular?api_key={_apiKey}&language=en-US&page=1";
+        string url = $"https://api.themoviedb.org/3/movie/popular?api_key={_apiKey}&language=en-US&page={page}";
         var response = await _http.GetFromJsonAsync<TmdbResponse>(url);
         return response?.results ?? new List<TmdbMovie>();
     }
+
 }
+
 
