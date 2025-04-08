@@ -1,13 +1,14 @@
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
+using MediaManager.Models;
 
 namespace MediaManager.Services;
 
 public class TmdbService
 {
     private readonly HttpClient _http;
-    private readonly string _apiKey = "TVŮJ_API_KLÍČ"; // nahraď svým
+    private readonly string _apiKey = "bd2e0f54c7e8f2965ee3ed85a41cc931";
 
     public TmdbService(HttpClient http)
     {
